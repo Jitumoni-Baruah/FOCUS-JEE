@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus with Jitumoni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color-1: #4e54c8;
+            --bg-color-2: #8f94fb;
+            --bg-color-3: #ff4e50;
+            --bg-color-4: #f9d423;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            /* 3D Moving Gradient Background */
+            background: linear-gradient(-45deg, #23a6d5, #23d5ab, #e73c7e, #ee7752);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism Container */
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* Header Branding */
+        .header {
+            position: absolute;
+            top: -150px;
+            left: 0;
+            text-align: left;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            letter-spacing: -2px;
+            font-weight: 700;
+        }
+
+        .header span {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+            display: block;
+        }
+
+        /* Motivational Quote Box */
+        .quote-box {
+            position: absolute;
+            top: -150px;
+            right: 0;
+            max-width: 300px;
+            text-align: right;
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        /* Modes Buttons */
+        .modes {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 25px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .mode-btn.active, .mode-btn:hover {
+            background: white;
+            color: #23a6d5;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            font-size: 10rem;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .main-btn {
+            background: white;
+            color: #23a6d5;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .main-btn:active { transform: scale(0.95); }
+
+        .sub-btn {
+            background: none;
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Footer Branding */
+        .footer {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-pill {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Floating particles for 3D effect */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-10vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particle" style="width: 50px; height: 50px; left: 10%; animation-duration: 25s;"></div>
+    <div class="particle" style="width: 20px; height: 20px; left: 80%; animation-duration: 15s; opacity: 0.4;"></div>
+    <div class="particle" style="width: 80px; height: 80px; left: 40%; animation-duration: 30s; opacity: 0.1;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>focus</h1>
+            <span>WITH JITUMONI</span>
+        </div>
+
+        <div class="quote-box">
+            <p id="quote">"Don't watch the clock; do what it does. Keep going."</p>
+        </div>
+
+        <div class="modes">
+            <button class="mode-btn active" onclick="setMode('pomodoro')">Pomodoro</button>
+            <button class="mode-btn" onclick="setMode('short')">Short Break</button>
+            <button class="mode-btn" onclick="setMode('long')">Long Break</button>
+            <button class="mode-btn" oneclick="setMode(timer)">Timer</button>
+        </div>
+
+        <div class="timer-display" id="timer">35:00</div>
+
+        <div class="controls">
+            <button class="main-btn" id="startBtn" onclick="toggleTimer()">Start</button>
+            <button class="sub-btn" onclick="toggleStopwatch()">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                </svg>
+                Stopwatch Mode
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="user-pill">🔥 21</div>
+        <div class="user-pill">jitumoni</div>
+    </div>
+
+    <script>
+        let timerDisplay = document.getElementById('timer');
+        let startBtn = document.getElementById('startBtn');
+        let countdown;
+        let isRunning = false;
+        let timeLeft = 1500; // 25 minutes in seconds
+        let isStopwatch = false;
+
+        function updateDisplay() {
+            let minutes = Math.floor(Math.abs(timeLeft) / 60);
+            let seconds = Math.abs(timeLeft) % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (isRunning) {
+                clearInterval(countdown);
+                startBtn.textContent = 'Start';
+            } else {
+                startBtn.textContent = 'Pause';
+                countdown = setInterval(() => {
+                    if (isStopwatch) {
+                        timeLeft++;
+                    } else {
+                        timeLeft--;
+                        if (timeLeft <= 0) clearInterval(countdown);
+                    }
+                    updateDisplay();
+                }, 1000);
+            }
+            isRunning = !isRunning;
+        }
+
+        function setMode(mode) {
+            isStopwatch = false;
+            clearInterval(countdown);
+            isRunning = false;
+            startBtn.textContent = 'Start';
+            
+            if (mode === 'pomodoro') timeLeft = 1500;
+            if (mode === 'short') timeLeft = 300;
+            if (mode === 'long') timeLeft = 900;
+            
+            updateDisplay();
+            
+            // UI Active State
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function toggleStopwatch() {
+            isStopwatch = true;
+            timeLeft = 0;
+            updateDisplay();
+            clearInterval(countdown);
+            isRunning = false;
+            startBtn.textContent = 'Start Stopwatch';
+        }
+
+        // Simple Random Quote Generator
+        const quotes = [
+            "Don't watch the clock; do what it does. Keep going.",
+            "Focus on being productive instead of busy.",
+            "Your focus determines your reality.",
+            "Deep work is the superpower of the 21st century."
+        ];
+        
+        setInterval(() => {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote').textContent = `"${randomQuote}"`;
+        }, 10000);
+    </script>
+</body>
+</html>
